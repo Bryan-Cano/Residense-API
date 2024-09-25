@@ -33,14 +33,26 @@ export const deleteVisitants = async (req: express.Request, res: express.Respons
     }
 }
 
+export const getVisitantById = async (req: express.Request, res: express.Response) => {
+    try{
+        const { id } = req.params;
+        const response  = await getVisitanstById (id);
+        //const deleteVisitantsById= await deleteVisitantsById(id);
+        return res.json(response);
+
+    }catch(error){
+        console.log(error);
+        return res.sendStatus(400);
+    }
+}
+
 
 export const updateVisitantsById = async (req: express.Request, res: express.Response) => {
     try{
         const { id } = req.params;
-        const { name } = req.body;
-        const { lastname } = req.body;
+        const { name, lastname, house, dpi} = req.body;
 
-        if(!name){
+        if(!id){
             return res.sendStatus(400);
         }
 
@@ -48,6 +60,8 @@ export const updateVisitantsById = async (req: express.Request, res: express.Res
 
         visitants.name = name;
         visitants.lastname = lastname;
+        visitants.house = house;
+        visitants.dpi = dpi;
 
         await visitants.save();
         return res.status(200).json(visitants).end();
