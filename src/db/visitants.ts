@@ -5,7 +5,9 @@ const visitansSchema = new mongoose.Schema({
     lastname: { type: String, required: true},
     dpi: { type: String, required: true},
     house: { type: String, required: true}
-});
+},
+ { timestamps : true }
+);
 
 export const visitantsModel = mongoose.model('Visitants', visitansSchema);
 export const getVisitants = () => visitantsModel.find();
